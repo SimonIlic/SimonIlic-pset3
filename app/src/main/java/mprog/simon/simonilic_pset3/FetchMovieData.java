@@ -1,10 +1,8 @@
 package mprog.simon.simonilic_pset3;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -42,6 +40,8 @@ public class FetchMovieData extends AsyncTask<String, Void, String>{
     }
 
 
+    /* Based on tutorial by androidauthority.com:
+    *  How to use a web API from your Android app */
     @Override
     protected String doInBackground(String... args) {
 
@@ -56,9 +56,11 @@ public class FetchMovieData extends AsyncTask<String, Void, String>{
                 api_url += URLEncoder.encode(args[1], "utf-8");
             }
 
+            // open connection
             url = new URL(api_url);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             try {
+                // get json data as string
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
                 StringBuilder stringBuilder = new StringBuilder();
                 String line;
