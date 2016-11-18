@@ -17,7 +17,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <EditText
             android:layout_width="wrap_content"
@@ -29,6 +29,13 @@
             android:id="@+id/searchField"
             android:layout_weight="1" />
 
+        <EditText
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/editText" />
+
         <Button
             android:text="Search"
             android:layout_width="wrap_content"
@@ -38,13 +45,5 @@
             android:layout_weight="1" />
 
     </LinearLayout>
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/list"
-        android:divider="@color/colorAccent"
-        android:layout_weight="1" >
-    </ListView>
 
 </LinearLayout>

@@ -32,7 +32,7 @@ public class FetchMovieData extends AsyncTask<String, Void, String>{
 
     // Interface to relay data back to MainActivity
     public interface AsyncResponse {
-        void processFinish(JSONObject output);
+        void processFinish(String output);
     }
 
     protected void onPreExecute() {
@@ -77,16 +77,7 @@ public class FetchMovieData extends AsyncTask<String, Void, String>{
         Toast.makeText(mActivity.getApplicationContext(), "Fetched data",
                 Toast.LENGTH_SHORT).show();
 
-        JSONObject resultJSON = null;
-        try {
-            resultJSON = new JSONObject(result);
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        delegate.processFinish(resultJSON);
+        delegate.processFinish(result);
 
 
     }
