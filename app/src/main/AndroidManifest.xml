@@ -11,15 +11,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
-            android:label="Search IMDB"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
-            android:name=".DisplayMovieActivity"
-            android:label="@string/title_activity_display_movie"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
             android:name=".MovieListActivity"
             android:label="My Movies"
             android:theme="@style/AppTheme.NoActionBar">
@@ -29,6 +20,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="Search IMDB"
+            android:parentActivityName=".MovieListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".DisplayMovieActivity"
+            android:label="@string/title_activity_display_movie"
+            android:parentActivityName=".MovieListActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package mprog.simon.simonilic_pset3;
 
 import android.content.Intent;
+import android.graphics.Movie;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -53,6 +54,17 @@ public class MainActivity extends AppCompatActivity implements FetchMovieData.As
         Intent intent = new Intent(this, DisplayMovieActivity.class);
         intent.putExtra("movie", output);
         startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        // go back to movie list
+        Intent intent = new Intent(this, MovieListActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
 

@@ -102,6 +102,7 @@ public class MovieListActivity extends AppCompatActivity {
         // go to movie search activity
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     private void displayMovie(SharedPreferences sharedPref, List<String> movieIDs, int position) {
@@ -115,6 +116,7 @@ public class MovieListActivity extends AppCompatActivity {
         intent.putExtra("movie", movieInfoString);
         intent.putExtra("listed", true);
         startActivity(intent);
+        finish();
     }
 
     @Override

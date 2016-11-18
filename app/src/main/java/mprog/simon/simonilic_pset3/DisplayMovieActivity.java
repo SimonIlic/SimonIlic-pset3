@@ -1,6 +1,5 @@
 package mprog.simon.simonilic_pset3;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,6 +19,7 @@ import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 public class DisplayMovieActivity extends AppCompatActivity {
+    boolean listed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class DisplayMovieActivity extends AppCompatActivity {
         // get intent extra's
         Intent parent_intent = getIntent();
         final String movieInfoString = parent_intent.getStringExtra("movie");
-        final boolean listed = parent_intent.getBooleanExtra("listed", false);
+        listed = parent_intent.getBooleanExtra("listed", false);
 
         // JSON-ify the result string
         JSONObject movieInfo = null;
@@ -108,6 +108,8 @@ public class DisplayMovieActivity extends AppCompatActivity {
         editor.remove(id);
         editor.commit();
 
+        Toast.makeText(this, "Removed movie from My Movies list", Toast.LENGTH_SHORT).show();
+
         // return to movie list activity
         Intent intent = new Intent(this, MovieListActivity.class);
         startActivity(intent);
@@ -123,9 +125,30 @@ public class DisplayMovieActivity extends AppCompatActivity {
         editor.putString(id, movieInfoString);
         editor.commit();
 
+        Toast.makeText(this, "Added movie to My Movies list", Toast.LENGTH_SHORT).show();
+
         // return to movie list activity
         Intent intent = new Intent(this, MovieListActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        // go to search display
+        if (listed) {
+            // go to movie list display
+            Intent intent = new Intent(this, MovieListActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        // go back to search
+        else {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 }
