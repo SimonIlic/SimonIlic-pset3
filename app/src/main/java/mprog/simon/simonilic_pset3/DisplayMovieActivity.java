@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -30,7 +31,7 @@ public class DisplayMovieActivity extends AppCompatActivity {
         // get intent extra's
         Intent parent_intent = getIntent();
         final String movieInfoString = parent_intent.getStringExtra("movie");
-        boolean listed = parent_intent.getBooleanExtra("listed", false);
+        final boolean listed = parent_intent.getBooleanExtra("listed", false);
 
         // JSON-ify the result string
         JSONObject movieInfo = null;
@@ -57,11 +58,18 @@ public class DisplayMovieActivity extends AppCompatActivity {
 
         // set up floating action button
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final String finalImdbID = imdbID;
         if (listed) {
-            fab.hide();
+            fab.setImageResource(android.R.drawable.ic_delete);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    deleteMovie(finalImdbID);
+                }
+            });
         }
         else {
-            final String finalImdbID = imdbID;
+            fab.setImageResource(android.R.drawable.ic_input_add);
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -82,8 +90,30 @@ public class DisplayMovieActivity extends AppCompatActivity {
         plotView.setText(plot);
 
         // set poster image
-        Picasso.with(getApplicationContext()).load(posterURL).into(posterView);
+        if (!posterURL.contentEquals("N/A")) {
+            Picasso.with(getApplicationContext()).load(posterURL).into(posterView);
+        }
+        else {
+            // load empty poster
+            String noPosterURL = "http://ia.media-imdb.com/images/G/01/imdb/images/nopicture/32x44/film-3119741174._CB526929832_.png";
+            Picasso.with(getApplicationContext()).load(noPosterURL).into(posterView);
+        }
     }
+
+    private void deleteMovie(String id) {
+        // remove movie from the shared pref list
+        SharedPreferences sharedPref = getSharedPreferences(
+                "mprog.simon.simonilic_pset3_movieList", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.remove(id);
+        editor.commit();
+
+        // return to movie list activity
+        Intent intent = new Intent(this, MovieListActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 
     private void addMovie(String id, String movieInfoString) {
         // add movie to the shared pref list

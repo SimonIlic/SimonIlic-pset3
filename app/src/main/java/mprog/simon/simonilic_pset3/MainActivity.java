@@ -29,47 +29,21 @@ public class MainActivity extends AppCompatActivity implements FetchMovieData.As
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     public void search(View view) {
-        // get seached title
+        // get searched title
         EditText editTextView = (EditText) findViewById(R.id.searchField);
         String search_term = editTextView.getText().toString();
 
+        // get year
+        EditText etYear = (EditText) findViewById(R.id.etYear);
+        String year = etYear.getText().toString();
+
         // create asyncTask class instance
         FetchMovieData asyncTask = new FetchMovieData(this, this);
-        asyncTask.execute(search_term);
+        asyncTask.execute(search_term, year);
     }
 
     //this override the implemented method from AsyncResponse

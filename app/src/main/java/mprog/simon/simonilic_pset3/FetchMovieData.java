@@ -14,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 
 
 /**
@@ -48,7 +49,14 @@ public class FetchMovieData extends AsyncTask<String, Void, String>{
 
         URL url = null;
         try {
-            url = new URL(api_url + args[0]);
+            // add searched title to url
+            api_url += URLEncoder.encode(args[0], "utf-8");
+            if (!args[1].isEmpty()) {
+                api_url += "&y=";
+                api_url += URLEncoder.encode(args[1], "utf-8");
+            }
+
+            url = new URL(api_url);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             try {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
@@ -74,11 +82,22 @@ public class FetchMovieData extends AsyncTask<String, Void, String>{
             return;
         }
 
-        Toast.makeText(mActivity.getApplicationContext(), "Fetched data",
-                Toast.LENGTH_SHORT).show();
+        // JSON-ify the result string
+        // handle error returns from omdb
+        JSONObject movieInfo = null;
+        try {
+            movieInfo = new JSONObject(result);
+            if (!movieInfo.getBoolean("Response")) {
+                Toast.makeText(mActivity, movieInfo.getString("Error"), Toast.LENGTH_LONG).show();
+            }
+            else {
+                Toast.makeText(mActivity.getApplicationContext(), "Fetched data",
+                        Toast.LENGTH_SHORT).show();
 
-        delegate.processFinish(result);
-
-
+                delegate.processFinish(result);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

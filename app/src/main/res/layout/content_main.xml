@@ -30,20 +30,20 @@
             android:layout_weight="1" />
 
         <EditText
-            android:layout_width="88dp"
+            android:layout_width="59dp"
             android:layout_height="wrap_content"
             android:inputType="number"
+            android:hint="(year)"
             android:ems="10"
-            android:id="@+id/editText" />
-
-        <Button
-            android:text="Search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/button"
-            android:onClick="search"
-            android:layout_weight="1" />
+            android:id="@+id/etYear" />
 
     </LinearLayout>
+
+    <Button
+        android:text="Search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button"
+        android:onClick="search" />
 
 </LinearLayout>
